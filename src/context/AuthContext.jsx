@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import API from "../api/axios";
+import { useQueryClient } from "@tanstack/react-query";
 
 const AuthContext = createContext();
 
@@ -8,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [loading, setLoading] = useState(true);
   const [initialized, setInitialized] = useState(false); // Track if auth is initialized
-
+  const queryClient = useQueryClient();
   // Helper function untuk clear auth state
   const clearAuthState = () => {
     setUser(null);
@@ -116,6 +117,7 @@ export const AuthProvider = ({ children }) => {
       console.error("Logout error:", error);
     } finally {
       clearAuthState();
+      queryClient.clear(); // Clear all queries on logout
     }
   };
 
