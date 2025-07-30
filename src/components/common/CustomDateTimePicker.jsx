@@ -159,7 +159,7 @@ const CustomDateTimePicker = ({
       {showCalendar && (
         <div
           ref={calendarRef}
-          className="fixed mt-2 bg-white border border-gray-200 rounded-xl shadow-lg z-50 p-6 w-[90vw] max-w-sm text-sm"
+          className="fixed top-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-lg z-100 p-6 w-[90vw] max-w-sm text-sm"
         >
           {/* Header */}
           <div className="flex items-center justify-between mb-4">

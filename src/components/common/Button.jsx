@@ -1,9 +1,8 @@
 // components/common/Button.jsx
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import { Loader2 } from "lucide-react";
 
-export default function Button({
+export default function   Button({
   children,
   type = "button",
   onClick,
@@ -12,10 +11,10 @@ export default function Button({
   variant = "primary", // primary, outline, danger, icon
   className = "",
 }) {
-  const baseClass = "inline-flex items-center justify-center px-4 py-2 rounded-md font-medium text-sm transition-all duration-200 transform hover:scale-105";
+  const baseClass = "w-full py-3 px-4 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer ";
 
   const variants = {
-    primary: "bg-purple-400 hover:bg-purple-600 text-white",
+    primary: " bg-gradient-to-r from-blue-600 to-purple-600 text-white",
     cancel:"bg-gray-500 hover:bg-gray-600 text-white",
     outline: "border border-purple-600 text-purple-600 hover:bg-purple-50",
     danger: "bg-red-600 hover:bg-red-700 text-white",
@@ -39,10 +38,16 @@ export default function Button({
         className
       )}
     >
-      {loading && (
-        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+      {loading ? (
+         <>
+            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+            Loading...
+          </>
+      ):(
+        <>
+          {children}
+        </>
       )}
-      {children}
     </motion.button>
   );
 }

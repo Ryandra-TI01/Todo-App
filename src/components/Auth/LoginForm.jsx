@@ -9,6 +9,7 @@ import FormWrapper from "../common/FormWrapper";
 import Button from "../common/Button";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { ArrowRight, Lock, Mail } from "lucide-react";
 
 export default function LoginForm() {
   const { login } = useAuth();
@@ -48,21 +49,53 @@ export default function LoginForm() {
   };
 
   return (
-    <FormWrapper title="Login" onSubmit={handleSubmit(onSubmit)}>
+    <FormWrapper onSubmit={handleSubmit(onSubmit)}>
       <CustomInput
         label="Email"
+        name="email"
         type="email"
+        placeholder="Enter your email"
+        icon={<Mail className="w-5 h-5 text-gray-400" />}
         {...register("email")}
         error={errors.email?.message}
       />
       <CustomInput
         label="Password"
+        name="password"
+        icon={<Lock className="w-5 h-5 text-gray-400" />}
         type="password"
+        placeholder="Enter your password" 
         {...register("password")}
         error={errors.password?.message}
       />
-      <Button type="submit" loading={loading}>
+
+      {/* Remember Me & Forgot Password */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center">
+          <input
+            id="remember-me"
+            name="remember-me"
+            type="checkbox"
+            // checked={rememberMe}
+            // onChange={(e) => setRememberMe(e.target.checked)}
+            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+          />
+          <label for="remember-me" htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
+            Remember me
+          </label>
+        </div>
+        <button
+          type="button"
+          className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+        >
+          Lupa password?
+        </button>
+      </div>
+
+      {/* Submit Button */}
+      <Button type="submit" variant="primary" onClick={handleSubmit} loading={loading}>
         Login
+        <ArrowRight className="w-5 h-5" />
       </Button>
     </FormWrapper>
   );
