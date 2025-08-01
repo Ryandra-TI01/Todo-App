@@ -13,45 +13,26 @@ import {
   User,
   X,
 } from "lucide-react";
-import Modal from "./common/Modal";
-import LoginForm from "./Auth/LoginForm";
-import HeaderForm from "./Auth/HeaderForm";
-import FooterForm from "./Auth/FooterForm";
-import RegisterForm from "./Auth/RegisterForm";
 import { useDarkMode } from "../context/DarkModeContext";
 import { ROUTES } from "../routes/Route";
+import ModalAuth from "./Auth/ModalAuth";
+import { useModal } from "../context/ModalProvider";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
-
-  const [open, setOpen] = useState(false); // Modal state for login/register
-
-  const [isLogin, setIsLogin] = useState(true); //true = login, false = register
-  const toggleForm = () => setIsLogin((prev) => !prev); // Toggle between login and register forms
-
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
-
   const { isDark, toggleTheme } = useDarkMode();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { openModal, closeModal } = useModal();
+  const dropdownRef = useRef(null);
+  
+  const navigate = useNavigate();
 
-  const openModal = () => {
-    setOpen(true);
-    setIsLogin(true); // Default to login form when opening modal
-  };
-
-  // Close modal when user is logged in
-  useEffect(() => {
-    if (user) {
-      setOpen(false); // Close modal when user is logged in(); // fungsi yang nutup modal dari context
-    }
-  }, [user]);
 
   const handleLogout = async () => {
     try {
       await logout();
-      setOpen(false);
+      closeModal();
       toast.success("Logout successful!");
       navigate("/");
     } catch {
@@ -75,7 +56,7 @@ export default function Navbar() {
 
   const navItems = user
     ? [
-        { label: "My Tasks", href:ROUTES.TASKS , icon: CheckSquare },
+        { label: "My Tasks", href: ROUTES.TASKS, icon: CheckSquare },
         { label: "Calendar", href: ROUTES.CALENDER, icon: Calendar },
         { label: "Analytics", href: ROUTES.ANALYTICS, icon: BarChart3 },
       ]
@@ -154,7 +135,7 @@ export default function Navbar() {
               {/* Auth Section */}
               {!user ? (
                 <button
-                  onClick={openModal}
+                  onClick={() => openModal(<ModalAuth />)}
                   className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
                 >
                   Login
@@ -258,28 +239,6 @@ export default function Navbar() {
           )}
         </div>
       </nav>
-
-      {/* Modal */}
-      <Modal isOpen={open} onClose={() => setOpen(false)}>
-        <HeaderForm
-          title={`${isLogin ? "Welcome Back" : "Join TaskFlow"}`}
-          subtitle={`${
-            isLogin
-              ? "Sign in to your account"
-              : "Create your account to get started"
-          }`}
-        />
-
-        {isLogin ? <LoginForm /> : <RegisterForm />}
-
-        <FooterForm
-          title={`${
-            isLogin ? "Don't have an account?" : "Already have an account?"
-          }`}
-          subtitle={isLogin ? "Sign up" : "Sign in"}
-          onClick={toggleForm}
-        />
-      </Modal>
     </>
   );
 }

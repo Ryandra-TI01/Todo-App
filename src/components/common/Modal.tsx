@@ -2,9 +2,17 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { createPortal } from "react-dom";
 
-export default function Modal({ isOpen, onClose, children }) {
-  // Check if document is available to avoid SSR issues
-  if (typeof document === "undefined") return null; // Prevent SSR issues
+// define type ModalProps
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+}
+
+// function Modal accept param isOpen of type boolean, onClose of type function, and children of type React.ReactNode
+export default function Modal({ isOpen, onClose, children }: ModalProps) {
+  if (typeof document === "undefined") return null;
+
   return createPortal(
     <AnimatePresence>
       {isOpen && (
@@ -16,21 +24,18 @@ export default function Modal({ isOpen, onClose, children }) {
           onClick={onClose}
         >
           <motion.div
-            className="bg-white px-8 py-12 rounded-xl shadow-xl w-full max-w-md overflow-x-auto max-h-[90%] relative "
+            className="bg-white px-8 py-12 rounded-xl shadow-xl w-full max-w-md overflow-x-auto max-h-[90%] relative"
             initial={{ scale: 0.9 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0.9 }}
-            // to prevent click events from propagating to the backdrop
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close Button */}
             <button
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 cursor-pointer"
               onClick={onClose}
             >
               <X className="w-5 h-5" />
             </button>
-
             {children}
           </motion.div>
         </motion.div>

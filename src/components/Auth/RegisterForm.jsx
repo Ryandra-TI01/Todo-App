@@ -10,11 +10,14 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import Button from "../common/Button";
 import { ArrowRight, Lock, Mail, User } from "lucide-react";
+import { ROUTES } from "../../routes/Route";
+import { useModal } from "../../context/ModalProvider";
 
 export default function RegisterForm() {
   const { register: doRegister } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const { closeModal } = useModal();
 
   const {
     register,
@@ -35,8 +38,9 @@ export default function RegisterForm() {
         data.password,
         data.password_confirmation
       );
-      toast.success("Registrasi berhasil!");
-      navigate("/");
+      toast.success("Registrasi successful!");
+      closeModal();
+      navigate(ROUTES.TASKS);
     } catch (err) {
       if (err.response?.status === 422 && err.response.data.errors) {
         Object.entries(err.response.data.errors).forEach(
@@ -48,7 +52,7 @@ export default function RegisterForm() {
           }
         );
       } else {
-        toast.error("Gagal registrasi. Silakan coba lagi.");
+        toast.error("Registrasi failed. Please try again later.");
       }
     } finally {
       setLoading(false);

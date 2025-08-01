@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
-import { CheckSquare, Calendar, BarChart3, Moon, Zap, ArrowRight, Star, Github, Linkedin, Mail, Play } from "lucide-react";
-import { useDarkMode } from "../context/DarkModeContext";
-// import useDarkMode from "../hooks/useDarkMode";
+import { CheckSquare, Calendar, BarChart3, Moon, Zap, ArrowRight, Star, Github, Linkedin, Mail } from "lucide-react";
+import HeroSection from "../components/Welcome/HeroSection";
 
 export default function WelcomePage() {
-  const { isDark, toggleTheme} = useDarkMode();
-  const [currentFeature, setCurrentFeature] = useState(0);
-
+  const [ currentFeature, setCurrentFeature] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentFeature((prev) => (prev + 1) % features.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
   const features = [
     {
       icon: CheckSquare,
@@ -48,84 +51,9 @@ export default function WelcomePage() {
   }, []);
 
   return (
-    <div >
-      {/* <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 dark:from-slate-900 dark:via-blue-900 dark:to-purple-900"> */}
-      <div>  
+    <>
         {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-
-          <div className="relative z-10 text-center px-6 max-w-6xl mx-auto">
-            {/* Theme Toggle */}
-            <div className="absolute top-6 right-6">
-              <button
-                onClick={toggleTheme}
-                className="p-3 rounded-full bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-300 hover:scale-110"
-              >
-                {isDark ? (
-                  <svg className="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clipRule="evenodd" />
-                  </svg>
-                ) : (
-                  <Moon className="w-6 h-6 text-slate-600" />
-                )}
-              </button>
-            </div>
-
-            {/* Logo */}
-            <div className="flex items-center justify-center space-x-3 mb-8">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center transform hover:scale-110 transition-transform duration-300">
-                <CheckSquare size={32} className="text-white" />
-              </div>
-              <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                TaskFlow
-              </h1>
-            </div>
-
-            {/* Subtitle */}
-            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Kelola tugas-tugas kamu dengan <span className="font-semibold text-blue-600 dark:text-blue-400">efisien</span>, 
-              pantau progres dengan <span className="font-semibold text-purple-600 dark:text-purple-400">visual</span>, 
-              dan capai produktivitas maksimal setiap hari.
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-              <button className="group relative px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-2xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-blue-500/25">
-                <span className="flex items-center space-x-2">
-                  <span>Mulai Sekarang</span>
-                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform duration-300" />
-                </span>
-              </button>
-              
-              <button className="group flex items-center space-x-2 px-8 py-4 bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 text-gray-700 dark:text-gray-200 font-semibold rounded-2xl hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-300">
-                <Play size={20} className="group-hover:scale-110 transition-transform duration-300" />
-                <span>Lihat Demo</span>
-              </button>
-            </div>
-
-            {/* Floating Feature Cards */}
-            <div className="relative">
-              <div className="flex justify-center items-center space-x-8">
-                {features.slice(0, 3).map((feature, index) => (
-                  <div
-                    key={index}
-                    className={`transform transition-all duration-500 ${
-                      index === 1 ? 'scale-110 z-10' : 'scale-90 opacity-70'
-                    }`}
-                  >
-                    <div className="bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl p-6 w-48 hover:scale-105 transition-all duration-300">
-                      <div className={`w-12 h-12 bg-gradient-to-r ${feature.color} rounded-xl flex items-center justify-center mb-4 mx-auto`}>
-                        <feature.icon size={24} className="text-white" />
-                      </div>
-                      <h3 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">{feature.title}</h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">{feature.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+        <HeroSection/>
 
         {/* Feature Preview Section */}
         <section className="py-24 px-6">
@@ -283,10 +211,7 @@ export default function WelcomePage() {
               </div>
             </div>
           </div>
-        </section>
-
-        
-      </div>
-    </div>
+        </section>        
+    </>
   );
 }
