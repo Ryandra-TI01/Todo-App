@@ -1,5 +1,10 @@
 // hooks/useTasks.js
-import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import API from "../api/axios";
 
 // Manage tasks with React Query
@@ -9,9 +14,12 @@ export function useTasks(token) {
   const incompleteQuery = useInfiniteQuery({
     queryKey: ["tasks", "incomplete"],
     queryFn: async ({ pageParam = 1 }) => {
-      const res = await API.get(`/api/tasks?is_completed=false&page=${pageParam}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await API.get(
+        `/api/tasks?is_completed=false&page=${pageParam}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       return res.data;
     },
     getNextPageParam: (lastPage) => {
@@ -26,9 +34,12 @@ export function useTasks(token) {
   const completedQuery = useInfiniteQuery({
     queryKey: ["tasks", "completed"],
     queryFn: async ({ pageParam = 1 }) => {
-      const res = await API.get(`/api/tasks?is_completed=true&page=${pageParam}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await API.get(
+        `/api/tasks?is_completed=true&page=${pageParam}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       return res.data;
     },
     getNextPageParam: (lastPage) => {
@@ -75,11 +86,23 @@ export function useTasks(token) {
     },
   });
 
+  const taskStatsQuery = useQuery({
+    queryKey: ["tasks", "stats"],
+    queryFn: async () => {
+      const res = await API.get("/api/tasks/stats", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return res.data;
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+
   return {
     incompleteQuery,
     completedQuery,
     addTask,
     updateTask,
     deleteTask,
+    taskStatsQuery,
   };
 }
