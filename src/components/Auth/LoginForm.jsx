@@ -60,6 +60,7 @@ export default function LoginForm() {
         label="Email"
         name="email"
         type="email"
+        autoComplete="email"
         placeholder="Enter your email"
         icon={<Mail className="w-5 h-5 text-gray-400" />}
         {...register("email")}
@@ -70,6 +71,7 @@ export default function LoginForm() {
         name="password"
         icon={<Lock className="w-5 h-5 text-gray-400" />}
         type="password"
+        autoComplete="current-password"
         placeholder="Enter your password"
         {...register("password")}
         error={errors.password?.message}
@@ -87,7 +89,7 @@ export default function LoginForm() {
             className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
           />
           <label
-            for="remember-me"
+            // for="remember-me"
             htmlFor="remember-me"
             className="ml-2 block text-sm text-gray-700"
           >
