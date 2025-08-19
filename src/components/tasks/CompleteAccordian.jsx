@@ -8,6 +8,7 @@ export default function CompleteAccordian({
   onLoadMore,
   onUpdate,
   onDelete,
+  tasksLength = tasks.length,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -15,15 +16,15 @@ export default function CompleteAccordian({
     <section className="border-t border-gray-300 pt-4">
       <button
         onClick={() => setIsExpanded((prev) => !prev)}
-        className="flex items-center justify-between w-full text-left hover:bg-gray-50 rounded px-3 py-2"
+        className="flex items-center justify-between w-full text-left rounded px-3 py-2"
       >
-        <h3 className="text-sm font-medium text-gray-500">
-          Completed ({tasks.length})
+        <h3 className="text-sm font-medium text-gray-500 dark:text-gray-200">
+          Completed ({tasksLength})
         </h3>
         {isExpanded ? (
-          <ChevronDown className="w-4 h-4" />
+          <ChevronDown className="w-4 h-4 text-gray-800 dark:text-gray-200" />
         ) : (
-          <ChevronRight className="w-4 h-4" />
+          <ChevronRight className="w-4 h-4 text-gray-800 dark:text-gray-200" />
         )}
       </button>
 
@@ -37,7 +38,7 @@ export default function CompleteAccordian({
           {hasMore && (
             <button
               onClick={onLoadMore}
-              className="text-xs text-blue-600 hover:underline"
+              className="text-xs text-purple-500 dark:text-white hover:underline"
             >
               Load More
             </button>

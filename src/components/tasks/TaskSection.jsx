@@ -17,6 +17,7 @@ export default function TaskSection() {
     addTask,
     updateTask,
     deleteTask,
+    taskStatsQuery
   } = useTasks(token);
 
   const loadMoreRef = useRef();
@@ -26,8 +27,8 @@ export default function TaskSection() {
   const errorMsg = incompleteQuery.error?.message || completedQuery.error?.message;
 
   const incompleteTasks = incompleteQuery.data?.pages.flatMap((page) => page.data) || [];    
-
   const completedTasks = completedQuery.data?.pages.flatMap((page) => page.data) || [];
+  const taskStats = taskStatsQuery.data? taskStatsQuery.data : { total: 0, completed: 0, incomplete: 0 };
 
   // ⛓ Infinite Scroll for Incomplete
   useEffect(() => {
@@ -78,6 +79,7 @@ export default function TaskSection() {
           {completedTasks.length > 0 && (
             <CompleteAccordion
               tasks={completedTasks}
+              tasksLength={taskStats.completed}
               hasMore={completedQuery.hasNextPage}
               onLoadMore={completedQuery.fetchNextPage}
               onUpdate={(task) => updateTask.mutate(task)}
