@@ -1,7 +1,6 @@
 import { Plus } from "lucide-react";
 import { toast } from "react-toastify";
 import Button from "../common/Button";
-import CustomDateTimePicker from "../common/CustomDateTimePicker";
 import { useTaskForm } from "../../hooks/useTaskForm";
 import {
   getFormStyles,
@@ -48,7 +47,9 @@ export default function TaskForm({ onAdded }) {
                 isHovered,
               })}`}
               onClick={() => setIsExpanded(!isExpanded)}
-              aria-label={isExpanded ? "Collapse task form" : "Expand task form"}
+              aria-label={
+                isExpanded ? "Collapse task form" : "Expand task form"
+              }
             />
           </div>
           <div className="flex-1">
@@ -78,19 +79,34 @@ export default function TaskForm({ onAdded }) {
                 onChange={(e) => setDescription(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Add description"
-                className="w-full text-sm placeholder-gray-400 border-none outline-none resize-none focus:placeholder-blue-400 transition-all duration-200"
+                className="w-full text-sm placeholder-gray-400 border-none outline-none resize-none focus:placeholder-purple-400 transition-all duration-200"
                 rows="2"
                 disabled={loading}
                 aria-multiline="true"
                 aria-label="Task Description"
               />
 
-              <div className="mt-3">
-                <CustomDateTimePicker
-                  value={dueDate}
-                  onChange={setDueDate}
-                  showTime
-                  timeInterval={15}
+              <div>
+                <input
+                  type="date"
+                  name="dueDate"
+                  id="dueDate"
+                  value={dueDate.date}
+                  onChange={(e) =>
+                    setDueDate({ ...dueDate, date: e.target.value })
+                  }
+                  className="text-sm"
+                />
+                <br />
+                <input
+                  type="time"
+                  name="dueDate"
+                  id="dueDate"
+                  value={dueDate.time}
+                  onChange={(e) =>
+                    setDueDate({ ...dueDate, time: e.target.value })
+                  }
+                  className="text-sm"
                 />
               </div>
             </div>
@@ -102,7 +118,12 @@ export default function TaskForm({ onAdded }) {
             isExpanded ? "max-h-16 opacity-100 mt-4" : "max-h-0 opacity-0 mt-0"
           }`}
         >
-          <Button onClick={resetForm} variant="cancel" disabled={loading}>
+          <Button
+            onClick={resetForm}
+            variant="cancel"
+            width="inline"
+            disabled={loading}
+          >
             Cancel
           </Button>
           <Button
@@ -117,6 +138,7 @@ export default function TaskForm({ onAdded }) {
             }}
             loading={loading}
             disabled={!title.trim() || loading}
+            width="inline"
           >
             <Plus className="w-4 h-4 mr-1" /> Add Task
           </Button>

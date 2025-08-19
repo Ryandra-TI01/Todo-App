@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import TaskForm from "./TaskForm";
 import TaskList from "./TaskList";
 import CompleteAccordion from "./CompleteAccordian";
 import EmptyTask from "./EmptyTask";
 import ErrorState from "./ErrorState";
-import LoadingTask from "./LoadingTask";
+import Loading from "./Loading";
 import { useTasks } from "../../hooks/useTasks";
 import { useAuth } from "../../context/AuthContext";
 import {TaskEditProvider} from "../../context/TaskEditContext";
@@ -25,11 +25,9 @@ export default function TaskSection() {
   const isError = incompleteQuery.isError || completedQuery.isError;
   const errorMsg = incompleteQuery.error?.message || completedQuery.error?.message;
 
-  const incompleteTasks =
-    incompleteQuery.data?.pages.flatMap((page) => page.data) || [];
+  const incompleteTasks = incompleteQuery.data?.pages.flatMap((page) => page.data) || [];    
 
-  const completedTasks =
-    completedQuery.data?.pages.flatMap((page) => page.data) || [];
+  const completedTasks = completedQuery.data?.pages.flatMap((page) => page.data) || [];
 
   // ⛓ Infinite Scroll for Incomplete
   useEffect(() => {
@@ -46,7 +44,7 @@ export default function TaskSection() {
     return () => observer.disconnect();
   }, [incompleteQuery]);
 
-  if (isLoading) return <LoadingTask />;
+  if (isLoading) return <Loading />;
   if (isError)
     return (
       <ErrorState

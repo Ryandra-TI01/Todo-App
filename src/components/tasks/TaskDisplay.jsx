@@ -9,18 +9,18 @@ export default function TaskDisplay({ title, description, dueDate, completed, on
 
   return (
     <div className="flex-1 cursor-pointer" onClick={onEdit}>
-      <h3 className={`text-sm text-start font-medium break-words ${completed ? "line-through text-gray-500" : "text-gray-900"}`}>
+      <h3 className={`text-gray-800 dark:text-gray-200 text-sm text-start font-medium break-words ${completed ? "line-through text-gray-500" : "text-gray-900"}`}>
         {title}
       </h3>
       {description && (
-        <p className={`text-xs mt-1 break-words ${completed ? "line-through text-gray-400" : "text-gray-600"}`}>
+        <p className={`text-xs mt-1 break-words dark:text-gray-400 ${completed ? "line-through text-gray-400" : "text-gray-600"}`}>
           {description}
         </p>
       )}
       {dueDate && (
         <div className={`flex items-center gap-1 mt-2 text-xs ${completed ? "text-gray-400" : "text-gray-500"}`}>
-          <Calendar className="w-3 h-3" />
-          <span>{formatDate(dueDate)}</span>
+          <Calendar className="w-3 h-3 dark:text-gray-300" />
+          <span className="dark:text-gray-300">{formatDate(dueDate)}</span>
         </div>
       )}
     </div>

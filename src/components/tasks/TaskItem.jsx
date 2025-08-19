@@ -79,8 +79,8 @@ export default function TaskItem({ task, onUpdate, onDelete }) {
 
   return (
     <li
-      className={`group flex items-start gap-3 p-3 rounded-lg transition-[box-shadow] duration-300 ${
-        isEditing ? "shadow border border-gray-100" : "hover:bg-gray-50"
+      className={`group flex items-start gap-3 p-3 rounded-lg transition-[box-shadow] duration-300 dark:bg-white/10 backdrop-blur-xl border border-white/20 ${
+        isEditing ? "shadow border border-gray-100" : "dark:hover:bg-white/5"
       }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -93,9 +93,8 @@ export default function TaskItem({ task, onUpdate, onDelete }) {
         isSaving={isSaving}
       />
       <div className="flex-1 min-w-0">
-        <AnimatePresence mode="wait">
           {!isEditing ? (
-            <motion.div
+            <div
               key="view"
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
@@ -116,7 +115,7 @@ export default function TaskItem({ task, onUpdate, onDelete }) {
                   onDelete={handleDelete}
                 />
               </div>
-            </motion.div>
+            </div>
           ) : (
             <motion.div
               key="edit"
@@ -138,7 +137,6 @@ export default function TaskItem({ task, onUpdate, onDelete }) {
               />
             </motion.div>
           )}
-        </AnimatePresence>
       </div>
     </li>
   );

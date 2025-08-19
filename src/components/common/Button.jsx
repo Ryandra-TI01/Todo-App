@@ -2,16 +2,17 @@
 import { motion } from "framer-motion";
 import clsx from "clsx";
 
-export default function   Button({
+export default function Button({
   children,
   type = "button",
   onClick,
   disabled = false,
   loading = false,
   variant = "primary", // primary, outline, danger, icon
+  width = "full", // full, inline
   className = "",
 }) {
-  const baseClass = "w-full py-3 px-4 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer ";
+  const baseClass = "py-2 px-4 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer ";
 
   const variants = {
     primary: " bg-gradient-to-r from-blue-600 to-purple-600 text-white",
@@ -25,6 +26,11 @@ export default function   Button({
   ? "cursor-pointer"
   : "cursor-not-allowed opacity-50";
 
+  const widthElement = {
+    full: "w-full",
+    inline: "w-auto",
+  }
+
   return (
     <motion.button
       whileTap={{ scale: 0.97 }}
@@ -35,6 +41,7 @@ export default function   Button({
         baseClass,
         variants[variant],
         interactiveCursorClass,
+        widthElement[width],
         className
       )}
     >

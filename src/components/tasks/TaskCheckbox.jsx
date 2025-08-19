@@ -20,7 +20,7 @@ export default function TaskCheckbox({ completed, onToggle, isHovered, isAnimati
       <Check
         className={`transition-all duration-300
           ${completed ? "text-blue-500 opacity-100 scale-100"
-          : isHoveredCheckbox ? "text-purple-500 opacity-70 scale-90"
+          : isHoveredCheckbox ? "text-purple-500 dark:text-white opacity-70 scale-105"
           : "text-purple-500 opacity-0 scale-75"}`}
       />
       {isAnimating && (
