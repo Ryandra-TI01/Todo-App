@@ -77,6 +77,17 @@ export default function TaskItem({ task, onUpdate, onDelete }) {
     setEditingId(null);
   };
 
+  // handle enter key to save edit
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && isEditing) {
+      e.preventDefault();
+      saveEdit();
+    } else if (e.key === "Escape" && isEditing) {
+      e.preventDefault();
+      handleCancel();
+    }
+  };
+
   const formRef = useRef(null);
 
   useEffect(() => {
@@ -144,6 +155,7 @@ export default function TaskItem({ task, onUpdate, onDelete }) {
               className="overflow-hidden"
             >
               <TaskEditForm
+                onKeyDown={handleKeyDown}
                 title={editTitle}
                 description={editDescription}
                 dueDate={editDueDate}

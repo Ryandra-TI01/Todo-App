@@ -11,6 +11,7 @@ export default function TaskEditForm({
   onCancel,
   onSave,
   isSaving,
+  onKeyDown = () => {},
 }) {
   return (
     <div className="space-y-3">
@@ -20,6 +21,7 @@ export default function TaskEditForm({
         className="w-full text-sm font-medium border-none outline-none bg-transparent dark:text-white"
         placeholder="Task title"
         disabled={isSaving}
+        onKeyDown={onKeyDown}
       />
       <textarea
         value={description}
@@ -28,6 +30,7 @@ export default function TaskEditForm({
         placeholder="Add description"
         rows="2"
         disabled={isSaving}
+        onKeyDown={onKeyDown}
       />
       {/* <CustomDateTimePicker
         value={dueDate}
@@ -41,6 +44,7 @@ export default function TaskEditForm({
         id="dueDate"
         value={dueDate.date}
         onChange={(e) => onDueDateChange({ ...dueDate, date: e.target.value })}
+        onKeyDown={onKeyDown}
         className="hover:bg-gray-100 dark:bg-gray-200 dark:hover:bg-gray-300 transition-colors rounded px-2 py-1 text-sm"
       />
       <br />
@@ -51,10 +55,13 @@ export default function TaskEditForm({
         value={dueDate.time}
         onChange={(e) => onDueDateChange({ ...dueDate, time: e.target.value })}
         className="hover:bg-gray-100 dark:bg-gray-200 dark:hover:bg-gray-300 transition-colors rounded px-2 py-1 text-sm"
+        onKeyDown={onKeyDown}
       />
 
       <div className="flex justify-end gap-2 border-t pt-3 border-gray-100">
-        <Button onClick={onCancel} variant="cancel" width="inline">Cancel</Button>
+        <Button onClick={onCancel} variant="cancel" width="inline">
+          Cancel
+        </Button>
         <Button
           onClick={onSave}
           disabled={!title.trim() || isSaving}
