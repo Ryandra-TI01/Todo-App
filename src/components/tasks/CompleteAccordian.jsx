@@ -16,7 +16,7 @@ export default function CompleteAccordian({
     <section className="border-t border-gray-300 pt-4">
       <button
         onClick={() => setIsExpanded((prev) => !prev)}
-        className="flex items-center justify-between w-full text-left rounded px-3 py-2"
+        className="flex items-center justify-between w-full text-left rounded-lg px-3 py-2 hover:bg-gray-100 dark:hover:bg-white/10 backdrop-blur-xl  transition-colors duration-200"
       >
         <h3 className="text-sm font-medium text-gray-500 dark:text-gray-200">
           Completed ({tasksLength})
