@@ -21,11 +21,7 @@ export default function CompleteAccordian({
         <h3 className="text-sm font-medium text-gray-500 dark:text-gray-200">
           Completed ({tasksLength})
         </h3>
-        {isExpanded ? (
-          <ChevronDown className="w-4 h-4 text-gray-800 dark:text-gray-200" />
-        ) : (
-          <ChevronRight className="w-4 h-4 text-gray-800 dark:text-gray-200" />
-        )}
+        <ChevronRight className={`w-4 h-4 text-gray-800 dark:text-gray-200 ${isExpanded && "rotate-90"} duration-200 ease-in-out`} />
       </button>
 
       {isExpanded && (
