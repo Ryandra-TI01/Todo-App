@@ -77,8 +77,24 @@ export default function TaskItem({ task, onUpdate, onDelete }) {
     setEditingId(null);
   };
 
+  const formRef = useRef(null);
+
+  useEffect(() => {
+    if (!isEditing) return;
+
+    const handleClickOutside = (event) => {
+      if (formRef.current && !formRef.current.contains(event.target)) {
+        handleCancel();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isEditing]);
+
   return (
     <li
+      ref={formRef}
       className={`group flex items-start gap-3 p-3 rounded-lg transition-[box-shadow] duration-300 dark:bg-white/10 backdrop-blur-xl border border-white/20 ${
         isEditing ? "shadow border border-gray-100" : "dark:hover:bg-white/5"
       }`}
@@ -93,13 +109,15 @@ export default function TaskItem({ task, onUpdate, onDelete }) {
         isSaving={isSaving}
       />
       <div className="flex-1 min-w-0">
+        <AnimatePresence mode="wait">
           {!isEditing ? (
-            <div
+            <motion.div
               key="view"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="overflow-hidden"
             >
               <div className="flex items-start justify-between">
                 <TaskDisplay
@@ -115,14 +133,15 @@ export default function TaskItem({ task, onUpdate, onDelete }) {
                   onDelete={handleDelete}
                 />
               </div>
-            </div>
+            </motion.div>
           ) : (
             <motion.div
               key="edit"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="overflow-hidden"
             >
               <TaskEditForm
                 title={editTitle}
@@ -137,6 +156,7 @@ export default function TaskItem({ task, onUpdate, onDelete }) {
               />
             </motion.div>
           )}
+        </AnimatePresence>
       </div>
     </li>
   );
