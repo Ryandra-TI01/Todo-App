@@ -4,7 +4,7 @@ import TaskList from "./TaskList";
 import CompleteAccordion from "./CompleteAccordian";
 import EmptyTask from "./EmptyTask";
 import ErrorState from "./ErrorState";
-import Loading from "./Loading";
+import Loading from "../common/Loading";
 import { useTasks } from "../../hooks/useTasks";
 import { useAuth } from "../../context/AuthContext";
 import {TaskEditProvider} from "../../context/TaskEditContext";
