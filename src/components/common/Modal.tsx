@@ -9,7 +9,6 @@ interface ModalProps {
   children: React.ReactNode;
 }
 
-// function Modal accept param isOpen of type boolean, onClose of type function, and children of type React.ReactNode
 export default function Modal({ isOpen, onClose, children }: ModalProps) {
   if (typeof document === "undefined") return null;
 

@@ -4,6 +4,7 @@ export interface Task {
   description?: string;
   is_completed: boolean;
   due_date?: string;
+  priority?: "low" | "medium" | "high";
 }
 
 // define type PaginatedResponse

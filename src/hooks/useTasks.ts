@@ -12,6 +12,7 @@ import {
 } from "@tanstack/react-query";
 import API from "../api/axios";
 import { Task, PaginatedResponse, TaskStats } from "../types/Task";
+import { toast } from "react-toastify";
 
 // setup manage cache
 export const queryClient = new QueryClient({
@@ -46,6 +47,14 @@ export function useTasks(token: string) {
     const res = await API.get("/api/tasks/stats");
     return res.data;
   };
+  const fetchCalendarTasks = async (): Promise<Task> => {
+    const res = await API.get("/api/tasks/calendar");
+    return res.data;
+  };
+  const calendarTasksQuery = useQuery({
+    queryKey: ["tasks", "all"],
+    queryFn: fetchCalendarTasks,
+  });
 
   // get incomplete tasks with infinite scroll
   const incompleteQuery = useInfiniteQuery({
@@ -81,6 +90,10 @@ export function useTasks(token: string) {
       API.post("/api/tasks", task).then((res) => res.data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      toast.success("Task added successfully!");
+    },
+    onError: (error: any) => {
+      toast.error(`Failed to add task: ${error.response?.data?.message || error.message}`);
     },
   });
 
@@ -102,6 +115,7 @@ export function useTasks(token: string) {
   // 7. Return Values
   return {
     // Queries
+    calendarTasksQuery,
     incompleteQuery,
     completedQuery,
     taskStatsQuery,
