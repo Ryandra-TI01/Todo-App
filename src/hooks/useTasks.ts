@@ -51,6 +51,17 @@ export function useTasks(token: string) {
     const res = await API.get("/api/tasks/calendar");
     return res.data;
   };
+
+  const fetchAnalytics = async (): Promise<any> => {
+    const res = await API.get("/api/tasks/analytics");
+    return res.data;
+  };
+
+  const analyticsQuery = useQuery({
+    queryKey: ["analytics"],
+    queryFn: fetchAnalytics,
+  })
+
   const calendarTasksQuery = useQuery({
     queryKey: ["tasks", "all"],
     queryFn: fetchCalendarTasks,
@@ -119,6 +130,7 @@ export function useTasks(token: string) {
     incompleteQuery,
     completedQuery,
     taskStatsQuery,
+    analyticsQuery,
     
     // Mutations
     addTask,

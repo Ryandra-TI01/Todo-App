@@ -8,6 +8,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import Footer from "./components/Footer";
 import { ModalProvider } from "./context/ModalProvider";
 import TaskCalendar from "./pages/TaskCalender";
+import Analytics from "./pages/Analytics";
 function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 dark:from-slate-900 dark:via-blue-900 dark:to-purple-900">
@@ -29,9 +30,7 @@ function App() {
               <Route element={<PrivateRoute />}>
                 <Route path={ROUTES.TASKS} element={<TaskPage />} />
                 <Route path={ROUTES.CALENDER} element={<TaskCalendar/>} />
-                <Route
-                  path={ROUTES.ANALYTICS}
-                  element={<div>Analytics Page</div>}
+                <Route path={ROUTES.ANALYTICS} element={<Analytics/>}
                 />
                 <Route
                   path={ROUTES.SETTINGS}
